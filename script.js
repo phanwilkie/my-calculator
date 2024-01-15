@@ -2,10 +2,6 @@
 const calcDisplayField = document.getElementById("calcDisplay");
 const calcHeaderField = document.getElementById("calcHeader");
 const currentOperatorField = document.getElementById("operatorField");
-let runningTotal = 0;
-let variable = 0;
-let operator = '';
-calcDisplayField.value = 0;
 
 function operate(operator, a, b) {
     let value = 0;
@@ -20,82 +16,56 @@ function subtract(a, b) {return a - b;};
 function multiply(a, b) {return a * b;};
 function divide(a, b) {return a / b;};
 
+const button = [];
+for (i = 0; i <= 9; i++) {
+    button[i] = document.querySelector('#btn'+i);
+};
 
-//Button 1 - Event Listener Mouse & Keystroke
-const btn1 = document.getElementById('btn1');
-btn1.addEventListener('click', function() {
-//if initial value is not 0 then add to string
+//working variables
+calcDisplayField.value = 0;
+let runningTotal = 0;
+let variable = 0;
+let operator = '';
 
-    calcDisplay.value += 1;
+//Numeric Buttons - Event Listener Mouse & Keystroke
+button[1].addEventListener('click', function() {
+    if (calcDisplayField.value === '0') {calcDisplayField.value = 1;} else {calcDisplay.value += 1;};});
+button[2].addEventListener('click', function() {
+    if (calcDisplayField.value === '0') {calcDisplayField.value = 2;} else {calcDisplay.value += 2;}});
+button[3].addEventListener('click', function() {
+    if (calcDisplayField.value === '0') {calcDisplayField.value = 3;} else {calcDisplay.value += 3;}});
+button[4].addEventListener('click', function() {
+    if (calcDisplayField.value === '0') {calcDisplayField.value = 4;} else {calcDisplay.value += 4;}});
+button[5].addEventListener('click', function() {
+    if (calcDisplayField.value === '0') {calcDisplayField.value = 5;} else {calcDisplay.value += 5;}});
+button[6].addEventListener('click', function() {
+    if (calcDisplayField.value === '0') {calcDisplayField.value = 6;} else {calcDisplay.value += 6;}});
+button[7].addEventListener('click', function() {
+    if (calcDisplayField.value === '0') {calcDisplayField.value = 7;} else {calcDisplay.value += 7;}});
+button[8].addEventListener('click', function() {
+    if (calcDisplayField.value === '0') {calcDisplayField.value = 8;} else {calcDisplay.value += 8;}}); 
+button[9].addEventListener('click', function() {
+    if (calcDisplayField.value === '0') {calcDisplayField.value = 9;} else {calcDisplay.value += 9;}});    
+button[0].addEventListener('click', function() {
+    if (calcDisplayField.value === '0') {calcDisplayField.value = 0;} else {calcDisplay.value += 0;}});    
 
-//otherwise clear the 0    
+
+//Decimal Button -Event Listener Mouse & Keystroke
+//Can only be used once
+const btnDecimal = document.querySelector('#btn-decimal');
+btnDecimal.addEventListener('click', function() {
+    if (calcDisplay.value.search(/[.]/) === -1) {calcDisplay.value += '.'}
 });
 
-//Button 2 -  - Event Listener Mouse & Keystroke
-const btn2 = document.getElementById('btn2');
-btn2.addEventListener('click', function() {
-    calcDisplay.value += 2;
-});
-
-//Button 3 -  - Event Listener Mouse & Keystroke
-const btn3 = document.getElementById('btn3');
-btn3.addEventListener('click', function() {
-    calcDisplay.value += 3;
-});
-
-// //Button 4 -  - Event Listener Mouse & Keystroke
-// const btn4 = document.getElementById('btn4');
-// btn4.addEventListener('click', function() {
-//     calcDisplay.value += 4;
-// });
-
-// //Button 5 -  - Event Listener Mouse & Keystroke
-// const btn5 = document.getElementById('btn5');
-// btn5.addEventListener('click', function() {
-//     calcDisplay.value += 5;
-// });
-
-// //Button 6 -  - Event Listener Mouse & Keystroke
-// const btn6 = document.getElementById('btn6');
-// btn6.addEventListener('click', function() {
-//     calcDisplay.value += 6;
-// });
-
-// //Button 7 -  - Event Listener Mouse & Keystroke
-// const btn7 = document.getElementById('btn7');
-// btn7.addEventListener('click', function() {
-//     calcDisplay.value += 7;
-// });
-
-// //Button 8 -  - Event Listener Mouse & Keystroke
-// const btn8 = document.getElementById('btn8');
-// btn8.addEventListener('click', function() {
-//     calcDisplay.value = +8;
-// });
-
-// //Button 9 -  - Event Listener Mouse & Keystroke
-// const btn9 = document.getElementById('btn9');
-// btn9.addEventListener('click', function() {
-//     calcDisplay.value = +9;
-// });
-
-//Button 0 -  - Event Listener Mouse & Keystroke
-const btn0 = document.getElementById('btn0');
-btn0.addEventListener('click', function() {
-    //if initial value is not 0 then add to string
-    calcDisplay.value += 0;
-});
-
-
-//+ Button - Event Listener Mouse & Keystroke
-const btnAdd = document.getElementById('btn-add');
+//Operation Buttons - Event Listener Mouse & Keystroke
+const btnAdd = document.querySelector('#btn-add');
 btnAdd.addEventListener('click', function() {
     operator = 'add';
     variable = Number(calcDisplayField.value);
     runningTotal = operate(operator, runningTotal, variable);
     currentOperatorField.textContent = '+';
     calcHeaderField.value = runningTotal;
-
+    // calcDisplayField.value = 0;
 });
 
 //Equal Button - Event Listener Mouse & Keystroke
@@ -106,6 +76,15 @@ btnEqual.addEventListener('click', function() {
     };
     
 });
+
+const btnReset = document.querySelector('#btn-reset');
+btnReset.addEventListener('click', function() {
+    runningTotal = 0;
+    variable = 0;
+    operator = '';
+    calcDisplayField.value = 0;
+});
+
 
 // // let a = 1, b = 1;
 // // console.log(`Add: ${add(a, b)}, Subtract: ${subtract(a, b)}, Multiply: ${multiply(a, b)}, Divide: ${divide(a, b)}`);
