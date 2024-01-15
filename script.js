@@ -1,8 +1,25 @@
-//Main variables
+//Button Variables
 const calcDisplayField = document.getElementById("calcDisplay");
 const calcHeaderField = document.getElementById("calcHeader");
 const currentOperatorField = document.getElementById("operatorField");
+const btnDecimal = document.querySelector('#btn-decimal');
+const btnReset = document.querySelector('#btn-reset');
+const btnAdd = document.querySelector('#btn-add');
+const btnDelete = document.querySelector('#btn-delete');
 
+const button = [];
+for (i = 0; i <= 9; i++) {
+    button[i] = document.querySelector('#btn'+i);
+};
+
+
+//working variables
+calcDisplayField.value = 0;
+let runningTotal = 0;
+let variable = 0;
+let operator = '';
+
+//Operatation Functions
 function operate(operator, a, b) {
     let value = 0;
     if (operator === 'add') { return value = add(a, b)}
@@ -16,20 +33,10 @@ function subtract(a, b) {return a - b;};
 function multiply(a, b) {return a * b;};
 function divide(a, b) {return a / b;};
 
-const button = [];
-for (i = 0; i <= 9; i++) {
-    button[i] = document.querySelector('#btn'+i);
-};
-
-//working variables
-calcDisplayField.value = 0;
-let runningTotal = 0;
-let variable = 0;
-let operator = '';
 
 //Numeric Buttons - Event Listener Mouse & Keystroke
 button[1].addEventListener('click', function() {
-    if (calcDisplayField.value === '0') {calcDisplayField.value = 1;} else {calcDisplay.value += 1;};});
+    if (calcDisplayField.value === '0') {calcDisplayField.value = 1;} else {calcDisplay.value += 1;}});
 button[2].addEventListener('click', function() {
     if (calcDisplayField.value === '0') {calcDisplayField.value = 2;} else {calcDisplay.value += 2;}});
 button[3].addEventListener('click', function() {
@@ -50,15 +57,20 @@ button[0].addEventListener('click', function() {
     if (calcDisplayField.value === '0') {calcDisplayField.value = 0;} else {calcDisplay.value += 0;}});    
 
 
-//Decimal Button -Event Listener Mouse & Keystroke
-//Can only be used once
-const btnDecimal = document.querySelector('#btn-decimal');
+//Decimal Button - Event Listener Mouse & Keystroke
 btnDecimal.addEventListener('click', function() {
-    if (calcDisplay.value.search(/[.]/) === -1) {calcDisplay.value += '.'}
+    if (calcDisplay.value.search(/[.]/) === -1) {calcDisplay.value += '.'}});
+
+//Backspace Button -  Event Listener Mouse & Keystroke
+btnDelete.addEventListener('click', function() {
+    const lastDigitDeleted = calcDisplay.value.slice(0, -1);
+    calcDisplay.value = lastDigitDeleted;
 });
 
+//Reset Button -  Event Listener Mouse & Keystroke
+btnReset.addEventListener('click', function() {runningTotal = 0; variable = 0; operator = ''; calcDisplayField.value = 0;});
+
 //Operation Buttons - Event Listener Mouse & Keystroke
-const btnAdd = document.querySelector('#btn-add');
 btnAdd.addEventListener('click', function() {
     operator = 'add';
     variable = Number(calcDisplayField.value);
@@ -77,13 +89,7 @@ btnEqual.addEventListener('click', function() {
     
 });
 
-const btnReset = document.querySelector('#btn-reset');
-btnReset.addEventListener('click', function() {
-    runningTotal = 0;
-    variable = 0;
-    operator = '';
-    calcDisplayField.value = 0;
-});
+
 
 
 // // let a = 1, b = 1;
