@@ -1,3 +1,11 @@
+.total-header {
+    display: flex;
+}
+
 .button-row-5 {
     display: flex;
+}
+
+#calcHeader, #calcDisplay {
+    pointer-events: none;
 }

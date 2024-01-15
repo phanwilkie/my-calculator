@@ -11,9 +11,12 @@
 </head>
 <body>
     <div class="container">
-        <div class="total"></div>
+        <div class="total-header">
+            <div class="header-left"><input type="text" name="total" id="calcHeader"  tabindex="-1"></div>
+            <div class="header-right"><p id="operatorField"></p></div>
+        </div>
         <div class="main-display">
-            <input type="text" name="display">
+            <input type="text" name="display" id="calcDisplay"  tabindex="-1">
         </div>
         <div class="button-row-1">
             <button>AC</button>
@@ -21,30 +24,31 @@
             <button>%</button>
             <button>&divide;</button>
         </div>
-        <div class="button-row-2"></div>
-            <button>7</button>
-            <button>8</button>
-            <button>9</button>
+        <div class="button-row-2">
+            <button id="btn7">7</button>
+            <button id="btn8">8</button>
+            <button id="btn9">9</button>
             <button>X</button>
+        </div>
         <div class="button-row-3">
-            <button>4</button>
-            <button>5</button>
-            <button>6</button>
+            <button id="btn4">4</button>
+            <button id="btn5">5</button>
+            <button id="btn6">6</button>
             <button>-</button>
         </div>
         <div class="button-row-4">
-            <button>1</button>
-            <button>2</button>
-            <button>3</button>
-            <button>+</button>
+            <button id="btn1">1</button>
+            <button id="btn2">2</button>
+            <button id="btn3">3</button>
+            <button id="btn-add">+</button>
         </div>
         <div class="button-row-5">
             <div class="row-5-left">
-                <button>0</button>
+                <button id="btn0">0</button>
             </div>
             <div class="row-5-right">
                 <button>.</button>
-                <button>=</button>
+                <button id="btn-equal">=</button>
             </div>
         </div>
     </div>
