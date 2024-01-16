@@ -3,17 +3,17 @@ let runningTotal = 0;
 let variables = [];
 let operator = '';
 
-
 //Button Variables
-const calcDisplayField = document.getElementById("calcDisplay");
-const calcHeaderField = document.getElementById("calcHeader");
+const calcDisplayField = document.getElementById("calcDisplay"); calcDisplayField.value = 0;
+const calcHeaderField = document.getElementById("calcHeader"); calcHeaderField.value = 0;
 const currentOperatorField = document.getElementById("operatorField");
 const btnDecimal = document.querySelector('#btn-decimal');
 const btnReset = document.querySelector('#btn-reset');
 const btnAdd = document.querySelector('#btn-add');
+const btnSubtract = document.querySelector('#btn-subtract');
 const btnDelete = document.querySelector('#btn-delete');
-calcDisplayField.value = 0;
-calcHeaderField.value = 0;
+
+const btnSigns = document.querySelector('#btn-signs')
 
 const button = [];
 for (i = 0; i <= 9; i++) {
@@ -55,8 +55,24 @@ button[8].addEventListener('click', function() {
 button[9].addEventListener('click', function() {
     if (calcDisplayField.value === '0') {calcDisplayField.value = 9;} else {calcDisplayField.value += 9;}});    
 button[0].addEventListener('click', function() {
-    if (calcDisplayField.value === '0') {calcDisplayField.value = 0;} else {calcDisplayField.value += 0;}});    
+    if (calcDisplayField.value === '0') {calcDisplayField.value = 0;} else {calcDisplayField.value += 0;}});  
+    
+//+ / - button
+btnSigns.addEventListener('click', function() {
+    //check if there is a leading -
+    if (calcDisplayField.value === '0') {calcDisplayField.value = '-';}
+    else if (calcDisplayField.value === '-') {calcDisplayField.value = '0';}
+    else if (calcDisplayField.value[0] !== '-' && calcDisplayField.value !== '0') {
+        removeNegative = calcDisplayField.value.slice(0,0) + '-' +calcDisplayField.value;
+        calcDisplayField.value = removeNegative;
+    }
+    else {calcDisplayField.value = calcDisplayField.value.slice(1);}
+});
 
+//just 0 --> replace with -
+//just 0 --> replace with 0
+//not 0 && no - --> add -
+//not 0 && - --> remove -
 
 //Decimal Button - Event Listener Mouse & Keystroke
 btnDecimal.addEventListener('click', function() {
@@ -83,7 +99,7 @@ btnReset.addEventListener('click', function() {
 btnAdd.addEventListener('click', function() {
     currentOperatorField.textContent = '+';
     operator = 'add';
-    //if array length is less than 2
+    //Evaluate array length to enable adding to runningTotal without needing to press '=' button
     if (variables.length === 0) {
         variables.push(Number(calcDisplayField.value));
     }
@@ -94,11 +110,9 @@ btnAdd.addEventListener('click', function() {
     else {
         console.log('BEFORE array: ' +variables + ' : ' +operator); //
         console.log('BEFORE running total: ' +runningTotal); //
-        // variables.shift();
         variables[0] = Number(calcDisplayField.value);
         variables[1] = 0;
         console.log('AFTER array: ' +variables); //
-        // variables.push(Number(calcDisplayField.value));
         runningTotal += operate(operator, variables[0], variables[1]);
         console.log('AFTER running total: '+runningTotal); //
     };
@@ -106,12 +120,43 @@ btnAdd.addEventListener('click', function() {
     calcDisplayField.value = 0;
 });
 
+btnSubtract.addEventListener('click', function() {
+    currentOperatorField.textContent = '-';
+    operator = 'subtract';
+    //Evaluate array length to enable adding to runningTotal without needing to press '=' button
+    if (variables.length === 0) {
+        console.log('LENGTH === 0'); //
+        console.log('BEFORE running total: ' +runningTotal); //
+        console.log('BEFORE array: ' +variables + ' : ' +operator); //
+        variables[0] = calcDisplayField.value;
+        // variables.push(Number(calcDisplayField.value));
+        console.log('AFTER array: ' +variables); //
+        console.log('AFTER running total: '+runningTotal); //
 
-//when I click on plus button
-//1. the plus button is highlighted
-//2. the existing value in the displayfield is cleared when I input new digit
-//3. i can put in as many digits as I want until I click on another operator 
+    }
+    else if (variables.length === 1) {
+        console.log('LENGTH === 1'); //
+        console.log('BEFORE running total: ' +runningTotal); //
+        console.log('BEFORE array: ' +variables + ' : ' +operator); //
+        variables.push(Number(calcDisplayField.value));
+        console.log('AFTER array: ' +variables); //
+        runningTotal += operate(operator, variables[0], variables[1]);
+        console.log('AFTER running total: '+runningTotal); //
 
+    }
+    else {
+        console.log('LENGTH === 2'); //
+        console.log('BEFORE running total: ' +runningTotal); //
+        console.log('BEFORE array: ' +variables + ' : ' +operator); //
+        variables[0] = Number(calcDisplayField.value) * -1;
+        variables[1] = 0;
+        console.log('AFTER array: ' +variables); //
+        runningTotal += operate(operator, variables[0], variables[1]);
+        console.log('AFTER running total: '+runningTotal); //
+    };
+    calcHeaderField.value = runningTotal;
+    calcDisplayField.value = 0;
+});
 
 //Equal Button - Event Listener Mouse & Keystroke
 const btnEqual = document.getElementById('btn-equal');
@@ -127,6 +172,8 @@ btnEqual.addEventListener('click', function() {
     console.log('var2: ' +variable2);
     console.log('running: ' +runningTotal);
     console.log('----');
+
+    //pressing on subsequent will repeat previous operation using the previous number
 });
 
 
