@@ -69,11 +69,6 @@ btnSigns.addEventListener('click', function() {
     else {calcDisplayField.value = calcDisplayField.value.slice(1);}
 });
 
-//just 0 --> replace with -
-//just 0 --> replace with 0
-//not 0 && no - --> add -
-//not 0 && - --> remove -
-
 //Decimal Button - Event Listener Mouse & Keystroke
 btnDecimal.addEventListener('click', function() {
     if (calcDisplayField.value.search(/[.]/) === -1) {calcDisplayField.value += '.'}});
@@ -161,31 +156,47 @@ btnSubtract.addEventListener('click', function() {
 //Equal Button - Event Listener Mouse & Keystroke
 const btnEqual = document.getElementById('btn-equal');
 btnEqual.addEventListener('click', function() {
-    variable2 = Number(calcDisplayField.value);
-    calcHeaderField.value = operate(operator, variable1, variable2);
-    runningTotal += Number(calcHeaderField.value);
-    variable1 = runningTotal;
-    calcDisplayField.value = 0;
 
-    console.log('var1: ' +variable1);
-    console.log('operator: ' +operator);
-    console.log('var2: ' +variable2);
-    console.log('running: ' +runningTotal);
-    console.log('----');
+if (calcDisplayField.value.length === 1) {
+    console.log('SC1 - ARRAY LENGTH = 1'); //
+    console.log('BEFORE running total: ' +runningTotal); //
+    console.log('BEFORE array: ' +variables + ' : ' +operator); //
+    console.log('AFTER array: ' +variables); //
+    // runningTotal += operate(operator, variables[0], variables[1]);
+    console.log('AFTER running total: '+runningTotal); //
+    // calcDisplayField.value = 0;
+ }
+ if (calcDisplayField.value.length === 2) {
+    console.log('SC2 - ARRAY LENGTH FULL'); //
+    console.log('BEFORE running total: ' +runningTotal); //
+    console.log('BEFORE array: ' +variables + ' : ' +operator); //
+    // variables.shift();
+    // variables[1] = 0;
+    console.log('AFTER array: ' +variables); //
+    runningTotal += operate(operator, variables[0], variables[1]);
+    console.log('AFTER running total: '+runningTotal); //
+    calcDisplayField.value = 0;
+ }
+
+ calcHeaderField.value = runningTotal;
+//  calcDisplayField.value = 0;
+});
+    // variable2 = Number(calcDisplayField.value);
+    // calcHeaderField.value = operate(operator, variable1, variable2);
+    // runningTotal += Number(calcHeaderField.value);
+    // variable1 = runningTotal;
+    // calcDisplayField.value = 0;
+
+    // console.log('var1: ' +variable1);
+    // console.log('operator: ' +operator);
+    // console.log('var2: ' +variable2);
+    // console.log('running: ' +runningTotal);
+    // console.log('----');
 
     //pressing on subsequent will repeat previous operation using the previous number
-});
+    //for example, 100-5 = 95 = 90 = 85 = 80 ... and so forth.
 
 
 
-
-// // let a = 1, b = 1;
-// // console.log(`Add: ${add(a, b)}, Subtract: ${subtract(a, b)}, Multiply: ${multiply(a, b)}, Divide: ${divide(a, b)}`);
-
-// // console.log(`Add: ${calculate('add', 4, 1)}, Subtract: ${calculate('subtract', 4, 1)}, Multiply: ${calculate('multiply', 4, 1)}, Divide: ${calculate('divide', 4, 1)}`);
-// console.log(`Add: ${operate('add', 12, 12)}`);
-// console.log(`Subtract: ${operate('subtract', 12, 17)}`);
-// console.log(`Multiply: ${operate('multiply', 12, 12)}`);
-// console.log(`Divide: ${operate('divide', 12, 12)}`);
 
 
