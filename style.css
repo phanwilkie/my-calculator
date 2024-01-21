@@ -6,6 +6,8 @@
     display: flex;
 }
 
-#calcHeader, #calcDisplay {
+.main-display {
     pointer-events: none;
+    margin-top: 15px;
+    margin-bottom: 15px;
 }
