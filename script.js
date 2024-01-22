@@ -107,12 +107,15 @@ btnAdd.addEventListener('click', function(){
         calcDisplayField.value = runningTotal;
         }
     else if (variables.length === 2) { //2+2+2+ should NOT equal 8 ... NEED TO FIX THE ARRAY
-            console.log('ADD scenario 2A - var.length === 2')
-            variables.shift();
-            variables.push(calcDisplayField.value);  
+            console.log('ADD scenario 3 - var.length === 2')
+            // variables.shift();
+            // variables.push(calcDisplayField.value);  
+            variables[0] = runningTotal;
+            variables[1] = calcDisplayField.value;
             operator = '+';
             takeSnapshot();
-            runningTotal += operate(operator, variables[0], variables[1]);
+            // runningTotal += operate(operator, variables[0], variables[1]);
+            runningTotal = operate(operator, variables[0], variables[1]);
             calcDisplayField.value = runningTotal;
         }
     //NEED CONDITION WHEN SWITCHING FROM DIFFERENT OPERATORS
