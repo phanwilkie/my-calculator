@@ -134,11 +134,8 @@ btnEqual.addEventListener('click', function() {
         if (lastInput === 'number') {
             console.log('equal case 1A')
             variables.push(calcDisplayField.value); 
-            //variables are being pushed into the array incorrectly
-            //any operation done after increment/decrement using = is giving incorrect value
-            //go to line 130 
         }
-        else {
+        else { //this is so 2+= is 4.... this to make this work with chaining operation
             if (lastVariables.length === 0) { 
                 console.log('equal case 1B-A')
                 variables[1] = variables[0];
@@ -155,8 +152,15 @@ btnEqual.addEventListener('click', function() {
         stepBy = variables[1];
         lastCommand = '=';
     }
+    //chaining increment to work e.g. 2+2+= should equal to
+    else if (variables.length === 2) {
+        console.log('Pressing = and the variable length is 2 ')
+        runningTotal += operate(operator, variables[0], variables[1]); //need to not increment
+        stepBy = runningTotal;
+        lastCommand = '=';
+    }
     //pressing multiple '=' in a row should increment/decrement using last number and operator
-    else if (lastCommand === '=' && lastOperator !== '') {
+    else if (lastCommand === '=' && lastOperator !== '') { //this one only works if last command is =
         console.log('equal case 2')
         operator = lastOperator;
         variables[0] = stepBy;
@@ -173,8 +177,10 @@ btnEqual.addEventListener('click', function() {
             runningTotal += operate(operator, variables[0], variables[1]);
         }
     }
+
+    //need to be able to increment 
+
     if (operator !== '') {
-        console.log('equal case 3')
         calcDisplayField.value = runningTotal;
     }
     console.log('var: ' + variables+ ' | operator: ' +operator+ ' | lastCommand: ' +lastCommand+ ' | lastInput: ' +lastInput);
