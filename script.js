@@ -121,9 +121,15 @@ btnAdd.addEventListener('click', function(){
             console.log('ADD scenario 3 - var.length === 2')
             variables[0] = runningTotal;
             variables[1] = calcDisplayField.value;
-            operator = '+';
+            if (lastOperator !== '+') {
+                operator = lastOperator;
+            }    
+            else {
+                operator = '+';
+            }
             takeSnapshot();
             runningTotal = operate(operator, variables[0], variables[1]);
+            operator = '+';
             calcDisplayField.value = runningTotal;
         }
     //NEED CONDITION WHEN SWITCHING FROM DIFFERENT OPERATORS
