@@ -1,7 +1,3 @@
-//RUNNING TOTAL NEEDS TO CALCULATE WHEN PRESSING + MULTIPLE TIMES WITHOUT NEEDING TO PRESS =
-//BUT IF USER WANTS TO PRESS EQUAL IT SHOULD WORK
-//LINE 102
-
 //Button Variables - can simplify this
 const calcDisplayField = document.querySelector("#calcDisplay"); 
 const btnDecimal = document.querySelector('#btn-decimal');
@@ -186,23 +182,40 @@ btnEqual.addEventListener('click', function() {
         }
         takeSnapshot();
         runningTotal = operate(operator, variables[0], variables[1]);
-        stepBy = variables[1];
+        //manipulate stepBy to decrement if the last operation was minus
+        if (lastOperator === '-') {
+            stepBy = variables[1] * -1;
+        }
+        else {
+            stepBy = variables[1];
+        }
+
         lastCommand = '=';
     }
     //chaining increment to work e.g. 2+2+= should equal to
     //pressing multiple '=' in a row should increment/decrement using last number and operator
-    else if (lastCommand === '=' && lastOperator !== '') { //this one only works if last command is =
+    else if (lastCommand === '=' && lastOperator !== '') { 
         console.log('equal case 2')
         operator = lastOperator;        
-        variables[0] = stepBy;
-        if (lastOperator === '+' || lastOperator === '-') {
-            console.log('equal case 2A');
+        variables[0] = stepBy; //POTENTIAL ERROR WITH -
+    
+        if (lastOperator === '+') {
+            console.log('equal case 2A+');
             variables[1] = 0;
             takeSnapshot();
             runningTotal += operate(operator, variables[0], variables[1]);
         }
+        //if this doesn't work revert it back by using || operator against first IF statement
+        else if (lastOperator === '-') {
+            console.log('equal case 2B-');
+            variables[1] *= -1;
+            variables[1] = 0;
+            takeSnapshot();
+            runningTotal += operate(operator, variables[0], variables[1]);
+        }
+        
         else { //for * and /
-            console.log('equal case 2B');
+            console.log('equal case 2C');
             variables[1] = 1;
             takeSnapshot();
             runningTotal += operate(operator, variables[0], variables[1]);
@@ -210,19 +223,19 @@ btnEqual.addEventListener('click', function() {
     }
     else if (variables.length === 2) {
         console.log('Pressing = and the variable length is 2 ')
-        
-        //original
-        // stepBy = runningTotal; 
-        // runningTotal += operate(operator, variables[0], variables[1]);
-        // lastCommand = '=';
-
-        //experiment
-        stepBy = Number(lastVariables[0]);
         variables[0] = runningTotal;
         variables[1] = calcDisplayField.value;
+        takeSnapshot();
         runningTotal = operate(operator, variables[0], variables[1]);
+        if (lastOperator === '-') {
+            stepBy = Number(lastVariables[1]) * -1;
+        }
+        else {
+            stepBy = Number(lastVariables[1])
+        }
         lastCommand = '=';
     }
+
 
     if (operator !== '') {
         calcDisplayField.value = runningTotal;
