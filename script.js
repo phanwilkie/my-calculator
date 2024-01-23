@@ -42,15 +42,15 @@ function takeSnapshot() {lastTotal = runningTotal; lastVariables = variables; la
 //NUMBERIC BUTTONS - Event Listener (keystroke to be added)
 for (let i = 0; i < buttons.length; i++) {
     buttons[i].addEventListener('click', function() {
-        if (lastInput === '' || lastInput === '+' || lastInput === '-' || lastInput === '*' || lastInput === '/' || lastInput === '=' ) {
+        if ((lastInput === '' || lastInput === '+' || lastInput === '-' || lastInput === '*' || lastInput === '/' || lastInput === '=' )) {
             calcDisplayField.value = [i];
         }
         else {
             if (calcDisplayField.value.length < 9) {
-                calcDisplayField.value += buttons[i].id.slice(-1); 
+                calcDisplayField.value += [i]; 
             }
         }
-        lastInput = 'number'
+        lastInput = 'number';
     })
 }
 
@@ -67,7 +67,18 @@ btnSigns.addEventListener('click', function() {
 });
 
 //DECIMAL BUTTON - Event Listener (keystroke to be added)
-btnDecimal.addEventListener('click', function() {if (calcDisplayField.value.search(/[.]/) === -1) {calcDisplayField.value += '.'; }});
+btnDecimal.addEventListener('click', function() {
+    if ((lastInput === '' || lastInput === '+' || lastInput === '-' || lastInput === '*' || lastInput === '/' || lastInput === '=' )) {
+        //add to 0, if it's the first thing user presses after the above operation
+        calcDisplayField.value = '0.';
+    }
+    else if (calcDisplayField.value.search(/[.]/) === -1) {
+        calcDisplayField.value += '.'; 
+    }
+    lastInput = '.';
+});
+
+//need to inspect last input
 
 //BACKSPACE BUTTON -  Event Listener (keystroke to be added))
 btnDelete.addEventListener('click', function() {
@@ -98,7 +109,7 @@ btnAdd.addEventListener('click', function(){
         variables.push(calcDisplayField.value);
         operator = '+';
     }
-    else if (variables.length === 1) { //NEED ANOTHER CONDITION... 2+2+ works, but ...  2+2+2+ doesn't
+    else if (variables.length === 1) {
         console.log('ADD scenario 2 - var.length === 1')
         variables.push(calcDisplayField.value);
         operator = '+';
@@ -106,15 +117,12 @@ btnAdd.addEventListener('click', function(){
         runningTotal += operate(operator, variables[0], variables[1]);
         calcDisplayField.value = runningTotal;
         }
-    else if (variables.length === 2) { //2+2+2+ should NOT equal 8 ... NEED TO FIX THE ARRAY
+    else if (variables.length === 2) {
             console.log('ADD scenario 3 - var.length === 2')
-            // variables.shift();
-            // variables.push(calcDisplayField.value);  
             variables[0] = runningTotal;
             variables[1] = calcDisplayField.value;
             operator = '+';
             takeSnapshot();
-            // runningTotal += operate(operator, variables[0], variables[1]);
             runningTotal = operate(operator, variables[0], variables[1]);
             calcDisplayField.value = runningTotal;
         }
@@ -178,8 +186,6 @@ btnEqual.addEventListener('click', function() {
         }
     }
 
-    //need to be able to increment 
-
     if (operator !== '') {
         calcDisplayField.value = runningTotal;
     }
@@ -191,3 +197,11 @@ btnEqual.addEventListener('click', function() {
     lastInput = '=';
     lastCommand = '=';
 });
+
+
+//TO DO
+//1. subtract
+//2. be able to switch operation ( - --> + / + --> -)
+//2. multiply
+//3. divide
+//4. +/- switch increment/decrement direction
