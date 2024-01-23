@@ -104,9 +104,17 @@ btnAdd.addEventListener('click', function(){
     else if (variables.length === 1) {
         console.log('ADD scenario 2 - var.length === 1')
         variables.push(calcDisplayField.value);
-        operator = '+';
+        //if the last operator isn't the same as + then it should sum up the values using prev operator
+        //before setting + as the current operator
+        if (lastOperator !== '+') {
+            operator = lastOperator;
+        }    
+        else {
+            operator = '+';
+        }
         takeSnapshot();
         runningTotal += operate(operator, variables[0], variables[1]);
+        operator = '+';
         calcDisplayField.value = runningTotal;
         }
     else if (variables.length === 2) {
@@ -137,18 +145,30 @@ btnSubtract.addEventListener('click', function(){
     else if (variables.length === 1) {
         console.log('SUB scenario 2 - var.length === 1')
         variables.push(calcDisplayField.value);
-        operator = '-';
+        if (lastOperator !== '-') {
+            operator = lastOperator;
+        }    
+        else {
+            operator = '-';
+        }
         takeSnapshot();
         runningTotal += operate(operator, variables[0], variables[1]);
+        operator = '-';
         calcDisplayField.value = runningTotal;
         }
     else if (variables.length === 2) {
             console.log('SUB scenario 3 - var.length === 2')
             variables[0] = runningTotal;
             variables[1] = calcDisplayField.value;
-            operator = '-';
+            if (lastOperator !== '-') {
+                operator = lastOperator;
+            }    
+            else {
+                operator = '-';
+            }
             takeSnapshot();
             runningTotal = operate(operator, variables[0], variables[1]);
+            operator = '-';
             calcDisplayField.value = runningTotal;
         }
     //NEED CONDITION WHEN SWITCHING FROM DIFFERENT OPERATORS
@@ -226,7 +246,7 @@ btnEqual.addEventListener('click', function() {
         variables[0] = runningTotal;
         variables[1] = calcDisplayField.value;
         takeSnapshot();
-        runningTotal = operate(operator, variables[0], variables[1]);
+        runningTotal = operate(operator, variables[0], variables[1]); //ERROR negative sign is wrong
         if (lastOperator === '-') {
             stepBy = Number(lastVariables[1]) * -1;
         }
