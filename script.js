@@ -2,8 +2,6 @@
 //BUT IF USER WANTS TO PRESS EQUAL IT SHOULD WORK
 //LINE 102
 
-
-
 //Button Variables - can simplify this
 const calcDisplayField = document.querySelector("#calcDisplay"); 
 const btnDecimal = document.querySelector('#btn-decimal');
@@ -63,7 +61,8 @@ btnSigns.addEventListener('click', function() {
         calcDisplayField.value = removeNegative;
     }
     else {calcDisplayField.value = calcDisplayField.value.slice(1);}
-    lastInput = 'sign';
+    // lastInput = 'sign';
+    // Disabled the above, otherwise it will break the = function where it checks whether the last input was number
 });
 
 //DECIMAL BUTTON - Event Listener (keystroke to be added)
@@ -77,8 +76,6 @@ btnDecimal.addEventListener('click', function() {
     }
     lastInput = '.';
 });
-
-//need to inspect last input
 
 //BACKSPACE BUTTON -  Event Listener (keystroke to be added))
 btnDelete.addEventListener('click', function() {
@@ -99,7 +96,6 @@ btnReset.addEventListener('click', function() {
     stepBy = 0;
     calcDisplayField.value = 0;
 });
-
 
 //ADD BUTTON - Event Listener (keystroke to be added)
 btnAdd.addEventListener('click', function(){
@@ -132,7 +128,6 @@ btnAdd.addEventListener('click', function(){
     lastInput = operator;
     console.log('var: ' + variables+ ' | operator: ' +operator+ ' | lastCommand: ' +lastCommand+ ' | lastInput: ' +lastInput);
     console.log('last var: ' + lastVariables+ ' | last operator: ' +lastOperator);
-
 });
 
 //EQUAL BUTTON
