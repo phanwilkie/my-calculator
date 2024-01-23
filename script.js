@@ -130,6 +130,39 @@ btnAdd.addEventListener('click', function(){
     console.log('last var: ' + lastVariables+ ' | last operator: ' +lastOperator);
 });
 
+//SUBTRACT BUTTON - Event Listener (keystroke to be added)
+btnSubtract.addEventListener('click', function(){
+    console.log('SUB operation')
+    if (variables.length === 0) {
+        console.log('SUB scenario 1')
+        variables.push(calcDisplayField.value);
+        operator = '-';
+    }
+    else if (variables.length === 1) {
+        console.log('SUB scenario 2 - var.length === 1')
+        variables.push(calcDisplayField.value);
+        operator = '-';
+        takeSnapshot();
+        runningTotal += operate(operator, variables[0], variables[1]);
+        calcDisplayField.value = runningTotal;
+        }
+    else if (variables.length === 2) {
+            console.log('SUB scenario 3 - var.length === 2')
+            variables[0] = runningTotal;
+            variables[1] = calcDisplayField.value;
+            operator = '-';
+            takeSnapshot();
+            runningTotal = operate(operator, variables[0], variables[1]);
+            calcDisplayField.value = runningTotal;
+        }
+    //NEED CONDITION WHEN SWITCHING FROM DIFFERENT OPERATORS
+    lastOperator = operator;
+    lastCommand = operator;
+    lastInput = operator;
+    console.log('var: ' + variables+ ' | operator: ' +operator+ ' | lastCommand: ' +lastCommand+ ' | lastInput: ' +lastInput);
+    console.log('last var: ' + lastVariables+ ' | last operator: ' +lastOperator);
+});
+
 //EQUAL BUTTON
 btnEqual.addEventListener('click', function() {
     if (variables.length === 1) { 
@@ -142,6 +175,7 @@ btnEqual.addEventListener('click', function() {
             if (lastVariables.length === 0) { 
                 console.log('equal case 1B-A')
                 variables[1] = variables[0];
+                //STEP BY IS WRONG
                 stepBy = variables[1];
             }
             else {
@@ -151,21 +185,15 @@ btnEqual.addEventListener('click', function() {
             }
         }
         takeSnapshot();
-        runningTotal = operate(operator, variables[0], variables[1]); //need to not increment
+        runningTotal = operate(operator, variables[0], variables[1]);
         stepBy = variables[1];
         lastCommand = '=';
     }
     //chaining increment to work e.g. 2+2+= should equal to
-    else if (variables.length === 2) {
-        console.log('Pressing = and the variable length is 2 ')
-        runningTotal += operate(operator, variables[0], variables[1]); //need to not increment
-        stepBy = runningTotal;
-        lastCommand = '=';
-    }
     //pressing multiple '=' in a row should increment/decrement using last number and operator
     else if (lastCommand === '=' && lastOperator !== '') { //this one only works if last command is =
         console.log('equal case 2')
-        operator = lastOperator;
+        operator = lastOperator;        
         variables[0] = stepBy;
         if (lastOperator === '+' || lastOperator === '-') {
             console.log('equal case 2A');
@@ -179,6 +207,21 @@ btnEqual.addEventListener('click', function() {
             takeSnapshot();
             runningTotal += operate(operator, variables[0], variables[1]);
         }
+    }
+    else if (variables.length === 2) {
+        console.log('Pressing = and the variable length is 2 ')
+        
+        //original
+        // stepBy = runningTotal; 
+        // runningTotal += operate(operator, variables[0], variables[1]);
+        // lastCommand = '=';
+
+        //experiment
+        stepBy = Number(lastVariables[0]);
+        variables[0] = runningTotal;
+        variables[1] = calcDisplayField.value;
+        runningTotal = operate(operator, variables[0], variables[1]);
+        lastCommand = '=';
     }
 
     if (operator !== '') {
