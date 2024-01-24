@@ -132,7 +132,6 @@ btnAdd.addEventListener('click', function(){
             operator = '+';
             calcDisplayField.value = runningTotal;
         }
-    //NEED CONDITION WHEN SWITCHING FROM DIFFERENT OPERATORS
     lastOperator = operator;
     lastCommand = operator;
     lastInput = operator;
@@ -141,7 +140,7 @@ btnAdd.addEventListener('click', function(){
 });
 
 //SUBTRACT BUTTON - Event Listener (keystroke to be added)
-btnSubtract.addEventListener('click', function(){
+btnSubtract.addEventListener('click', function() {
     console.log('SUB operation')
     if (variables.length === 0) {
         console.log('SUB scenario 1')
@@ -177,7 +176,52 @@ btnSubtract.addEventListener('click', function(){
             operator = '-';
             calcDisplayField.value = runningTotal;
         }
-    //NEED CONDITION WHEN SWITCHING FROM DIFFERENT OPERATORS
+    lastOperator = operator;
+    lastCommand = operator;
+    lastInput = operator;
+    console.log('var: ' + variables+ ' | operator: ' +operator+ ' | lastCommand: ' +lastCommand+ ' | lastInput: ' +lastInput);
+    console.log('last var: ' + lastVariables+ ' | last operator: ' +lastOperator);
+});
+
+//MULTIPLY BUTTON - Event Listener (keystroke to be added)
+btnMultiply.addEventListener('click', function(){
+    console.log('MULTIPLY operation')
+    if (variables.length === 0) {
+        console.log('MULTIPLY scenario 1')
+        variables.push(calcDisplayField.value);
+        operator = '*';
+    }
+    else if (variables.length === 1) {
+        console.log('MULTIPLY scenario 2 - var.length === 1')
+        variables.push(calcDisplayField.value);
+        //if the last operator isn't the same as + then it should sum up the values using prev operator
+        //before setting + as the current operator
+        if (lastOperator !== '*') {
+            operator = lastOperator;
+        }    
+        else {
+            operator = '*';
+        }
+        takeSnapshot();
+        runningTotal += operate(operator, variables[0], variables[1]);
+        operator = '*';
+        calcDisplayField.value = runningTotal;
+        }
+    else if (variables.length === 2) {
+            console.log('MULTIPLY scenario 3 - var.length === 2')
+            variables[0] = runningTotal;
+            variables[1] = calcDisplayField.value;
+            if (lastOperator !== '*') {
+                operator = lastOperator;
+            }    
+            else {
+                operator = '*';
+            }
+            takeSnapshot();
+            runningTotal = operate(operator, variables[0], variables[1]);
+            operator = '*';
+            calcDisplayField.value = runningTotal;
+        }
     lastOperator = operator;
     lastCommand = operator;
     lastInput = operator;
@@ -223,28 +267,32 @@ btnEqual.addEventListener('click', function() {
     else if (lastCommand === '=' && lastOperator !== '') { 
         console.log('equal case 2')
         operator = lastOperator;        
-        variables[0] = stepBy; //POTENTIAL ERROR WITH -
+        variables[0] = stepBy;
     
         if (lastOperator === '+') {
-            console.log('equal case 2A+');
+            console.log('equal case 2 +');
             variables[1] = 0;
             takeSnapshot();
             runningTotal += operate(operator, variables[0], variables[1]);
         }
-        //if this doesn't work revert it back by using || operator against first IF statement
         else if (lastOperator === '-') {
-            console.log('equal case 2B-');
+            console.log('equal case 2 -');
             variables[1] *= -1;
             variables[1] = 0;
             takeSnapshot();
             runningTotal += operate(operator, variables[0], variables[1]);
         }
-        
-        else { //for * and /
-            console.log('equal case 2C');
+        if (lastOperator === '*') {
+            console.log('equal case 2 *');
             variables[1] = 1;
             takeSnapshot();
-            runningTotal += operate(operator, variables[0], variables[1]);
+            runningTotal *= operate(operator, variables[0], variables[1]);
+        }
+        if (lastOperator === '/') {
+            console.log('equal case 2 /');
+            variables[1] = 1;
+            takeSnapshot();
+            runningTotal /= operate(operator, variables[0], variables[1]);
         }
     }
     else if (variables.length === 2) {
@@ -261,8 +309,6 @@ btnEqual.addEventListener('click', function() {
         }
         lastCommand = '=';
     }
-
-
     if (operator !== '') {
         calcDisplayField.value = runningTotal;
     }
@@ -277,8 +323,11 @@ btnEqual.addEventListener('click', function() {
 
 
 //TO DO
-//1. subtract
-//2. be able to switch operation ( - --> + / + --> -)
+//1. subtract - DONE
+//2. be able to switch operation ( - --> + / + --> -) - DONE
 //2. multiply
-//3. divide
-//4. +/- switch increment/decrement direction
+//3. divide and divided by 0
+//4. % and fraction
+//5. +/- switch increment/decrement direction
+//6. Keystroke
+//7. CSS styling and responsive
