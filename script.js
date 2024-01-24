@@ -50,7 +50,6 @@ for (let i = 0; i < buttons.length; i++) {
         lastInput = 'number';
     })
 }
-// && /[-]/.test(calcDisplayField.value) === false
 
 //SIGN BUTTON - Event Listener
 btnSigns.addEventListener('click', function() {
@@ -59,13 +58,12 @@ btnSigns.addEventListener('click', function() {
     else if (calcDisplayField.value[0] !== '-' && calcDisplayField.value !== '0') {
         removeNegative = calcDisplayField.value.slice(0,0) + '-' +calcDisplayField.value;
         calcDisplayField.value = removeNegative;
+        runningTotal = Number(calcDisplayField.value);
     }
-    else {calcDisplayField.value = calcDisplayField.value.slice(1);}
-    
-
-    //BUG - adding minus first
-    //need to inverse the following - runningTotal & displayValue and stepBy
-    //what about for multiplication and division?
+    else {
+        calcDisplayField.value = calcDisplayField.value.slice(1);
+        runningTotal = Number(calcDisplayField.value);
+    }
 });
 
 //PERCENTAGE BUTTON
@@ -74,7 +72,6 @@ btnPercentage.addEventListener('click', function() {calcDisplayField.value /= 10
 //DECIMAL BUTTON - Event Listener (keystroke to be added)
 btnDecimal.addEventListener('click', function() {
     if ((lastInput === '' || lastInput === '+' || lastInput === '-' || lastInput === '*' || lastInput === '/' || lastInput === '=' )) {
-        //add to 0, if it's the first thing user presses after the above operation
         calcDisplayField.value = '0.';
     }
     else if (calcDisplayField.value.search(/[.]/) === -1) {
