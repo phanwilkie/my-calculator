@@ -39,17 +39,18 @@ function takeSnapshot() {lastTotal = runningTotal; lastVariables = variables; la
 //NUMBERIC BUTTONS - Event Listener (keystroke to be added)
 for (let i = 0; i < buttons.length; i++) {
     buttons[i].addEventListener('click', function() {
-        if ((lastInput === '' || lastInput === '+' || lastInput === '-' || lastInput === '*' || lastInput === '/' || lastInput === '=' )) {
+        if ((lastInput === '' || lastInput === '+' || lastInput === '-' || lastInput === '*' || lastInput === '/' || lastInput === '=' ) && calcDisplayField.value !== '-') {
             calcDisplayField.value = [i];
         }
         else {
-            if (calcDisplayField.value.length < 9) {
+            if (calcDisplayField.value.length < 10 || calcDisplayField.value === '-') {
                 calcDisplayField.value += [i]; 
             }
         }
         lastInput = 'number';
     })
 }
+// && /[-]/.test(calcDisplayField.value) === false
 
 //SIGN BUTTON - Event Listener
 btnSigns.addEventListener('click', function() {
@@ -60,9 +61,15 @@ btnSigns.addEventListener('click', function() {
         calcDisplayField.value = removeNegative;
     }
     else {calcDisplayField.value = calcDisplayField.value.slice(1);}
-    // lastInput = 'sign';
-    // Disabled the above, otherwise it will break the = function where it checks whether the last input was number
+    
+
+    //BUG - adding minus first
+    //need to inverse the following - runningTotal & displayValue and stepBy
+    //what about for multiplication and division?
 });
+
+//PERCENTAGE BUTTON
+btnPercentage.addEventListener('click', function() {calcDisplayField.value /= 100;});
 
 //DECIMAL BUTTON - Event Listener (keystroke to be added)
 btnDecimal.addEventListener('click', function() {
@@ -290,7 +297,6 @@ btnEqual.addEventListener('click', function() {
             if (lastVariables.length === 0) { 
                 console.log('equal case 1B-A')
                 variables[1] = variables[0];
-                //STEP BY IS WRONG
                 stepBy = variables[1];
             }
             else {
@@ -349,7 +355,7 @@ btnEqual.addEventListener('click', function() {
         variables[0] = runningTotal;
         variables[1] = calcDisplayField.value;
         takeSnapshot();
-        runningTotal = operate(operator, variables[0], variables[1]); //ERROR negative sign is wrong
+        runningTotal = operate(operator, variables[0], variables[1]);
         if (lastOperator === '-') {
             stepBy = Number(lastVariables[1]) * -1;
         }
@@ -374,9 +380,8 @@ btnEqual.addEventListener('click', function() {
 //TO DO
 //1. subtract - DONE
 //2. be able to switch operation ( - --> + / + --> -) - DONE
-//2. multiply
-//3. divide and divided by 0
-//4. % and fraction
-//5. +/- switch increment/decrement direction
+//2. multiply - DONE
+//3. divide and divided by 0 - DONE
+//4. % and fraction - DONE
 //6. Keystroke
-//7. CSS styling and responsive
+//5. +/- switch increment/decrement direction
