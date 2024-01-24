@@ -29,8 +29,11 @@ function operate(operator, a, b) {
 function add(a, b) {return Number(a) + Number(b);};
 function subtract(a, b) {return Number(a) - Number(b);};
 function multiply(a, b) {return Number(a) * Number(b);};
-function divide(a, b) {return Number(a) / Number(b);}; 
-    //need to prevent divided by zero
+function divide(a, b) {
+    if (b === '0') {return 'Err...'}
+    else {return Number(a) / Number(b);}; 
+};
+
 function takeSnapshot() {lastTotal = runningTotal; lastVariables = variables; lastOperator = operator;};
 
 //NUMBERIC BUTTONS - Event Listener (keystroke to be added)
@@ -220,6 +223,52 @@ btnMultiply.addEventListener('click', function(){
             takeSnapshot();
             runningTotal = operate(operator, variables[0], variables[1]);
             operator = '*';
+            calcDisplayField.value = runningTotal;
+        }
+    lastOperator = operator;
+    lastCommand = operator;
+    lastInput = operator;
+    console.log('var: ' + variables+ ' | operator: ' +operator+ ' | lastCommand: ' +lastCommand+ ' | lastInput: ' +lastInput);
+    console.log('last var: ' + lastVariables+ ' | last operator: ' +lastOperator);
+});
+
+//DIVIDE BUTTON - Event Listener (keystroke to be added)
+btnDivide.addEventListener('click', function(){
+    console.log('DIVIDE operation')
+    if (variables.length === 0) {
+        console.log('DIVIDE scenario 1')
+        variables.push(calcDisplayField.value);
+        operator = '/';
+    }
+    else if (variables.length === 1) {
+        console.log('DIVIDE scenario 2 - var.length === 1')
+        variables.push(calcDisplayField.value);
+        //if the last operator isn't the same as + then it should sum up the values using prev operator
+        //before setting + as the current operator
+        if (lastOperator !== '/') {
+            operator = lastOperator;
+        }    
+        else {
+            operator = '/';
+        }
+        takeSnapshot();
+        runningTotal += operate(operator, variables[0], variables[1]);
+        operator = '/';
+        calcDisplayField.value = runningTotal;
+        }
+    else if (variables.length === 2) {
+            console.log('DIVIDE scenario 3 - var.length === 2')
+            variables[0] = runningTotal;
+            variables[1] = calcDisplayField.value;
+            if (lastOperator !== '/') {
+                operator = lastOperator;
+            }    
+            else {
+                operator = '/';
+            }
+            takeSnapshot();
+            runningTotal = operate(operator, variables[0], variables[1]);
+            operator = '/';
             calcDisplayField.value = runningTotal;
         }
     lastOperator = operator;
