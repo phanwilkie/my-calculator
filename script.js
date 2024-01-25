@@ -36,8 +36,34 @@ function divide(a, b) {
 
 function takeSnapshot() {lastTotal = runningTotal; lastVariables = variables; lastOperator = operator;};
 
-function percentage() {
-    calcDisplayField.value /= 100;
+function percentage() {calcDisplayField.value /= 100;};
+
+function backSpace() {
+    const lastDigitDeleted = calcDisplayField.value.slice(0, -1);
+    calcDisplayField.value = lastDigitDeleted;
+};
+
+function addRemoveDecimal() {
+    if ((lastInput === '' || lastInput === '+' || lastInput === '-' || lastInput === '*' || lastInput === '/' || lastInput === '=' )) {
+        calcDisplayField.value = '0.';
+    }
+    else if (calcDisplayField.value.search(/[.]/) === -1) {
+        calcDisplayField.value += '.'; 
+    }
+    lastInput = '.';
+};
+
+function reset() {
+    runningTotal = 0; 
+    lastTotal = 0;
+    variables = [];
+    lastVariables = [];
+    operator = '';
+    lastOperator = '';
+    lastInput = '';
+    lastCommand = '';
+    stepBy = 0;
+    calcDisplayField.value = 0;
 };
 
 function enterNumber(num) {
@@ -61,87 +87,7 @@ for (let i = 0; i < buttons.length; i++) {
     })
 };
 
-document.addEventListener('keydown', function(e) {
-        if (e.key === '0') { enterNumber(0) }
-        else if (e.key === '1') { enterNumber(1) }
-        else if (e.key === '2') { enterNumber(2) }
-        else if (e.key === '3') { enterNumber(3) }
-        else if (e.key === '4') { enterNumber(4) }
-        else if (e.key === '5') { enterNumber(5) }
-        else if (e.key === '6') { enterNumber(6) }
-        else if (e.key === '7') { enterNumber(7) }
-        else if (e.key === '8') { enterNumber(8) }
-        else if (e.key === '9') { enterNumber(9) }
-        else if (e.key === 'c') { reset() }
-        else if (e.key === '%') { percentage() }
-        // if (e.key === 'Backspace') { enterNumber(9) };
-        // if (e.key === '/') { enterNumber(9) };
-        // if (e.key === '*') { enterNumber(9) };
-        // if (e.key === '-') { enterNumber(9) };
-        // if (e.key === '+') { enterNumber(9) };
-        // if (e.key === '=') { enterNumber(9) };
-        // if (e.key === '.') { enterNumber(9) };
-});
-
-//SIGN BUTTON - Event Listener
-btnSigns.addEventListener('click', function() {
-    if (calcDisplayField.value === '0') {calcDisplayField.value = '-';}
-    else if (calcDisplayField.value === '-') {calcDisplayField.value = '0';}
-    else if (calcDisplayField.value[0] !== '-' && calcDisplayField.value !== '0') {
-        removeNegative = calcDisplayField.value.slice(0,0) + '-' +calcDisplayField.value;
-        calcDisplayField.value = removeNegative;
-        runningTotal = Number(calcDisplayField.value);
-    }
-    else {
-        calcDisplayField.value = calcDisplayField.value.slice(1);
-        runningTotal = Number(calcDisplayField.value);
-    }
-});
-
-//PERCENTAGE BUTTON
-btnPercentage.addEventListener('click', function() {percentage()});
-
-
-
-//DECIMAL BUTTON - Event Listener (keystroke to be added)
-btnDecimal.addEventListener('click', function() {
-    if ((lastInput === '' || lastInput === '+' || lastInput === '-' || lastInput === '*' || lastInput === '/' || lastInput === '=' )) {
-        calcDisplayField.value = '0.';
-    }
-    else if (calcDisplayField.value.search(/[.]/) === -1) {
-        calcDisplayField.value += '.'; 
-    }
-    lastInput = '.';
-});
-
-//BACKSPACE BUTTON -  Event Listener (keystroke to be added))
-btnDelete.addEventListener('click', function() {
-    const lastDigitDeleted = calcDisplayField.value.slice(0, -1);
-    calcDisplayField.value = lastDigitDeleted;
-});
-
-function reset() {
-    runningTotal = 0; 
-    lastTotal = 0;
-    variables = [];
-    lastVariables = [];
-    operator = '';
-    lastOperator = '';
-    lastInput = '';
-    lastCommand = '';
-    stepBy = 0;
-    calcDisplayField.value = 0;
-}
-
-//RESET BUTTON -  Event Listener
-btnReset.addEventListener('click', function() {
- reset();
-});
-
-
-
-//ADD BUTTON - Event Listener (keystroke to be added)
-btnAdd.addEventListener('click', function(){
+function addButton() {
     console.log('ADD operation')
     if (variables.length === 0) {
         console.log('ADD scenario 1')
@@ -184,10 +130,9 @@ btnAdd.addEventListener('click', function(){
     lastInput = operator;
     console.log('var: ' + variables+ ' | operator: ' +operator+ ' | lastCommand: ' +lastCommand+ ' | lastInput: ' +lastInput);
     console.log('last var: ' + lastVariables+ ' | last operator: ' +lastOperator);
-});
+};
 
-//SUBTRACT BUTTON - Event Listener (keystroke to be added)
-btnSubtract.addEventListener('click', function() {
+function subtractButton() {
     console.log('SUB operation')
     if (variables.length === 0) {
         console.log('SUB scenario 1')
@@ -228,10 +173,9 @@ btnSubtract.addEventListener('click', function() {
     lastInput = operator;
     console.log('var: ' + variables+ ' | operator: ' +operator+ ' | lastCommand: ' +lastCommand+ ' | lastInput: ' +lastInput);
     console.log('last var: ' + lastVariables+ ' | last operator: ' +lastOperator);
-});
+};
 
-//MULTIPLY BUTTON - Event Listener (keystroke to be added)
-btnMultiply.addEventListener('click', function(){
+function multiplyButton() {
     console.log('MULTIPLY operation')
     if (variables.length === 0) {
         console.log('MULTIPLY scenario 1')
@@ -274,10 +218,9 @@ btnMultiply.addEventListener('click', function(){
     lastInput = operator;
     console.log('var: ' + variables+ ' | operator: ' +operator+ ' | lastCommand: ' +lastCommand+ ' | lastInput: ' +lastInput);
     console.log('last var: ' + lastVariables+ ' | last operator: ' +lastOperator);
-});
+};
 
-//DIVIDE BUTTON - Event Listener (keystroke to be added)
-btnDivide.addEventListener('click', function(){
+function divideButton() {
     console.log('DIVIDE operation')
     if (variables.length === 0) {
         console.log('DIVIDE scenario 1')
@@ -320,10 +263,9 @@ btnDivide.addEventListener('click', function(){
     lastInput = operator;
     console.log('var: ' + variables+ ' | operator: ' +operator+ ' | lastCommand: ' +lastCommand+ ' | lastInput: ' +lastInput);
     console.log('last var: ' + lastVariables+ ' | last operator: ' +lastOperator);
-});
+};
 
-//EQUAL BUTTON
-btnEqual.addEventListener('click', function() {
+function equalButton() {
     if (variables.length === 1) { 
         console.log('equal case 1')
         if (lastInput === 'number') {
@@ -351,7 +293,6 @@ btnEqual.addEventListener('click', function() {
         else {
             stepBy = variables[1];
         }
-
         lastCommand = '=';
     }
     //chaining increment to work e.g. 2+2+= should equal to
@@ -411,14 +352,53 @@ btnEqual.addEventListener('click', function() {
     operator = '';
     lastInput = '=';
     lastCommand = '=';
+};
+
+//SIGN BUTTON - Event Listener
+btnSigns.addEventListener('click', function() {
+    if (calcDisplayField.value === '0') {calcDisplayField.value = '-';}
+    else if (calcDisplayField.value === '-') {calcDisplayField.value = '0';}
+    else if (calcDisplayField.value[0] !== '-' && calcDisplayField.value !== '0') {
+        removeNegative = calcDisplayField.value.slice(0,0) + '-' +calcDisplayField.value;
+        calcDisplayField.value = removeNegative;
+        runningTotal = Number(calcDisplayField.value);
+    }
+    else {
+        calcDisplayField.value = calcDisplayField.value.slice(1);
+        runningTotal = Number(calcDisplayField.value);
+    }
 });
 
+//OPERATION BUTTON CLICKS
+btnPercentage.addEventListener('click', function() {percentage()});
+btnDecimal.addEventListener('click', function() {addRemoveDecimal()});
+btnDelete.addEventListener('click', function() {backSpace()});
+btnReset.addEventListener('click', function() {reset();});
+btnAdd.addEventListener('click', function(){addButton()});
+btnSubtract.addEventListener('click', function() {subtractButton()});
+btnMultiply.addEventListener('click', function(){multiplyButton()});
+btnDivide.addEventListener('click', function(){divideButton()});
+btnEqual.addEventListener('click', function() {equalButton()});
 
-//TO DO
-//1. subtract - DONE
-//2. be able to switch operation ( - --> + / + --> -) - DONE
-//2. multiply - DONE
-//3. divide and divided by 0 - DONE
-//4. % and fraction - DONE
-//6. Keystroke
-//5. +/- switch increment/decrement direction - DONE
+//KEYBOARD INPUTS
+document.addEventListener('keydown', function(e) {
+    if (e.key === '0') { enterNumber(0) }
+    else if (e.key === '1') { enterNumber(1) }
+    else if (e.key === '2') { enterNumber(2) }
+    else if (e.key === '3') { enterNumber(3) }
+    else if (e.key === '4') { enterNumber(4) }
+    else if (e.key === '5') { enterNumber(5) }
+    else if (e.key === '6') { enterNumber(6) }
+    else if (e.key === '7') { enterNumber(7) }
+    else if (e.key === '8') { enterNumber(8) }
+    else if (e.key === '9') { enterNumber(9) }
+    else if (e.key === 'c') { reset() }
+    else if (e.key === '%') { percentage() }
+    else if (e.key === 'Backspace') { backSpace() }
+    else if (e.key === '/') { divideButton() }
+    else if (e.key === '*') { multiplyButton(9) }
+    else if (e.key === '-') { subtractButton(9) }
+    else if (e.key === '+') { addButton(9) }
+    else if (e.key === '=' || e.key === 'Enter') { equalButton() }
+    else if (e.key === '.') { addRemoveDecimal(9) }
+});
