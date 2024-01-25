@@ -1,13 +1,78 @@
-.total-header {
+body {
+    width: 50%;
+    margin-left: 10%;
+    margin-right: 10%;
+}
+
+button {
+    font-size: 11px;
+    width: 32px;
+    color: white;
+    background-color: rgb(88, 89, 91);
+    border-width: thin;
+}
+
+#btn0 {
+    width: 70px;
+}
+
+#btn-decimal, #btn-equal {
+    width: 32px;
+}
+
+#btn-equal {
+    background-color: rgb(227, 108, 51);
+}
+
+.row-5-left, .row-5-right {
+    width: 50%;
+}
+
+#btn-delete {
+    display: none;
+}
+
+#btn-reset {
+    background-color: rgb(197, 88, 72);
+}
+
+#btn-signs, #btn-percentage, #btn-divide, #btn-multiply, #btn-subtract, #btn-add {
+    background-color: rgb(16, 13, 15);
+} 
+
+.container {
+    width: 150px;
+    padding: 8px;
+    border-radius: 5px;
+    background: rgb(30,28,31);
+    background: linear-gradient(234deg, rgba(30,28,31,1) 0%, rgba(57,56,59,1) 50%);
+}
+
+#calcDisplay {
+    background-color: rgb(164, 175, 125);
+    height: 25px;
+    text-align: right;
+}
+
+.button-row-1, .button-row-2, .button-row-3, .button-row-4, .button-row-5 {
     display: flex;
+    justify-content: center;
+    margin-top: 5px;
+    gap: 6px;
 }
 
 .button-row-5 {
-    display: flex;
+    margin-bottom: 10px;
 }
 
 .main-display {
+    display: flex;
+    justify-content: center;
     pointer-events: none;
     margin-top: 15px;
     margin-bottom: 15px;
+}
+
+.caption {
+    font-size: 8px;
 }
