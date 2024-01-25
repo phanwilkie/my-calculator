@@ -36,20 +36,44 @@ function divide(a, b) {
 
 function takeSnapshot() {lastTotal = runningTotal; lastVariables = variables; lastOperator = operator;};
 
-//NUMBERIC BUTTONS - Event Listener (keystroke to be added)
+function enterNumber(num) {
+    //do not allow adding of additional 0 if 0 is the only number
+    if ((lastInput === '' || lastInput === '+' || lastInput === '-' || lastInput === '*' || lastInput === '/' || lastInput === '=' ) && calcDisplayField.value !== '-') {
+        calcDisplayField.value = num;
+    }
+    else {
+        if (calcDisplayField.value.length < 10 || calcDisplayField.value === '-') {
+            calcDisplayField.value += num; 
+        }
+    }
+    lastInput = 'number';
+};
+
 for (let i = 0; i < buttons.length; i++) {
     buttons[i].addEventListener('click', function() {
-        if ((lastInput === '' || lastInput === '+' || lastInput === '-' || lastInput === '*' || lastInput === '/' || lastInput === '=' ) && calcDisplayField.value !== '-') {
-            calcDisplayField.value = [i];
-        }
-        else {
-            if (calcDisplayField.value.length < 10 || calcDisplayField.value === '-') {
-                calcDisplayField.value += [i]; 
-            }
-        }
-        lastInput = 'number';
+        enterNumber(i);
     })
-}
+};
+
+document.addEventListener('keydown', function(e) {
+        if (e.key === '0') { enterNumber(0) };
+        if (e.key === '1') { enterNumber(1) };
+        if (e.key === '2') { enterNumber(2) };
+        if (e.key === '3') { enterNumber(3) };
+        if (e.key === '4') { enterNumber(4) };
+        if (e.key === '5') { enterNumber(5) };
+        if (e.key === '6') { enterNumber(6) };
+        if (e.key === '7') { enterNumber(7) };
+        if (e.key === '8') { enterNumber(8) };
+        if (e.key === '9') { enterNumber(9) };
+        // if (e.key === '9') { enterNumber(9) };
+        // if (e.key === '9') { enterNumber(9) };
+        // if (e.key === '9') { enterNumber(9) };
+        // if (e.key === '9') { enterNumber(9) };
+        // if (e.key === '9') { enterNumber(9) };
+        // if (e.key === '9') { enterNumber(9) };
+
+});
 
 //SIGN BUTTON - Event Listener
 btnSigns.addEventListener('click', function() {
@@ -381,4 +405,4 @@ btnEqual.addEventListener('click', function() {
 //3. divide and divided by 0 - DONE
 //4. % and fraction - DONE
 //6. Keystroke
-//5. +/- switch increment/decrement direction
+//5. +/- switch increment/decrement direction - DONE
