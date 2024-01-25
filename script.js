@@ -1,4 +1,4 @@
-//Button Variables - can simplify this
+//DOM Element Variables
 const calcDisplayField = document.querySelector("#calcDisplay"); 
 const btnDecimal = document.querySelector('#btn-decimal');
 const btnReset = document.querySelector('#btn-reset');
@@ -67,7 +67,6 @@ function reset() {
 };
 
 function enterNumber(num) {
-    //do not allow adding of additional 0 if 0 is the only number
     if ((lastInput === '' || lastInput === '+' || lastInput === '-' || lastInput === '*' || lastInput === '/' || lastInput === '=' ) && calcDisplayField.value !== '-') {
         calcDisplayField.value = num;
     }
@@ -88,17 +87,12 @@ for (let i = 0; i < buttons.length; i++) {
 };
 
 function addButton() {
-    console.log('ADD operation')
     if (variables.length === 0) {
-        console.log('ADD scenario 1')
         variables.push(calcDisplayField.value);
         operator = '+';
     }
     else if (variables.length === 1) {
-        console.log('ADD scenario 2 - var.length === 1')
         variables.push(calcDisplayField.value);
-        //if the last operator isn't the same as + then it should sum up the values using prev operator
-        //before setting + as the current operator
         if (lastOperator !== '+') {
             operator = lastOperator;
         }    
@@ -111,7 +105,6 @@ function addButton() {
         calcDisplayField.value = runningTotal;
         }
     else if (variables.length === 2) {
-            console.log('ADD scenario 3 - var.length === 2')
             variables[0] = runningTotal;
             variables[1] = calcDisplayField.value;
             if (lastOperator !== '+') {
@@ -128,19 +121,14 @@ function addButton() {
     lastOperator = operator;
     lastCommand = operator;
     lastInput = operator;
-    console.log('var: ' + variables+ ' | operator: ' +operator+ ' | lastCommand: ' +lastCommand+ ' | lastInput: ' +lastInput);
-    console.log('last var: ' + lastVariables+ ' | last operator: ' +lastOperator);
 };
 
 function subtractButton() {
-    console.log('SUB operation')
     if (variables.length === 0) {
-        console.log('SUB scenario 1')
         variables.push(calcDisplayField.value);
         operator = '-';
     }
     else if (variables.length === 1) {
-        console.log('SUB scenario 2 - var.length === 1')
         variables.push(calcDisplayField.value);
         if (lastOperator !== '-') {
             operator = lastOperator;
@@ -154,7 +142,6 @@ function subtractButton() {
         calcDisplayField.value = runningTotal;
         }
     else if (variables.length === 2) {
-            console.log('SUB scenario 3 - var.length === 2')
             variables[0] = runningTotal;
             variables[1] = calcDisplayField.value;
             if (lastOperator !== '-') {
@@ -171,19 +158,14 @@ function subtractButton() {
     lastOperator = operator;
     lastCommand = operator;
     lastInput = operator;
-    console.log('var: ' + variables+ ' | operator: ' +operator+ ' | lastCommand: ' +lastCommand+ ' | lastInput: ' +lastInput);
-    console.log('last var: ' + lastVariables+ ' | last operator: ' +lastOperator);
 };
 
 function multiplyButton() {
-    console.log('MULTIPLY operation')
     if (variables.length === 0) {
-        console.log('MULTIPLY scenario 1')
         variables.push(calcDisplayField.value);
         operator = '*';
     }
     else if (variables.length === 1) {
-        console.log('MULTIPLY scenario 2 - var.length === 1')
         variables.push(calcDisplayField.value);
         //if the last operator isn't the same as + then it should sum up the values using prev operator
         //before setting + as the current operator
@@ -199,7 +181,6 @@ function multiplyButton() {
         calcDisplayField.value = runningTotal;
         }
     else if (variables.length === 2) {
-            console.log('MULTIPLY scenario 3 - var.length === 2')
             variables[0] = runningTotal;
             variables[1] = calcDisplayField.value;
             if (lastOperator !== '*') {
@@ -216,19 +197,14 @@ function multiplyButton() {
     lastOperator = operator;
     lastCommand = operator;
     lastInput = operator;
-    console.log('var: ' + variables+ ' | operator: ' +operator+ ' | lastCommand: ' +lastCommand+ ' | lastInput: ' +lastInput);
-    console.log('last var: ' + lastVariables+ ' | last operator: ' +lastOperator);
 };
 
 function divideButton() {
-    console.log('DIVIDE operation')
     if (variables.length === 0) {
-        console.log('DIVIDE scenario 1')
         variables.push(calcDisplayField.value);
         operator = '/';
     }
     else if (variables.length === 1) {
-        console.log('DIVIDE scenario 2 - var.length === 1')
         variables.push(calcDisplayField.value);
         //if the last operator isn't the same as + then it should sum up the values using prev operator
         //before setting + as the current operator
@@ -244,7 +220,6 @@ function divideButton() {
         calcDisplayField.value = runningTotal;
         }
     else if (variables.length === 2) {
-            console.log('DIVIDE scenario 3 - var.length === 2')
             variables[0] = runningTotal;
             variables[1] = calcDisplayField.value;
             if (lastOperator !== '/') {
@@ -261,26 +236,20 @@ function divideButton() {
     lastOperator = operator;
     lastCommand = operator;
     lastInput = operator;
-    console.log('var: ' + variables+ ' | operator: ' +operator+ ' | lastCommand: ' +lastCommand+ ' | lastInput: ' +lastInput);
-    console.log('last var: ' + lastVariables+ ' | last operator: ' +lastOperator);
 };
 
 function equalButton() {
     if (variables.length === 1) { 
-        console.log('equal case 1')
         if (lastInput === 'number') {
-            console.log('equal case 1A')
             variables.push(calcDisplayField.value); 
         }
         else { //this is so 2+= is 4.... this to make this work with chaining operation
             if (lastVariables.length === 0) { 
-                console.log('equal case 1B-A')
                 variables[1] = variables[0];
                 stepBy = variables[1];
             }
             else {
-                console.log('equal case 1B-B')
-                variables[1] = 0; //come back for multiply and divide
+                variables[1] = 0;
                 stepBy = variables[0];
             }
         }
@@ -295,41 +264,33 @@ function equalButton() {
         }
         lastCommand = '=';
     }
-    //chaining increment to work e.g. 2+2+= should equal to
-    //pressing multiple '=' in a row should increment/decrement using last number and operator
     else if (lastCommand === '=' && lastOperator !== '') { 
-        console.log('equal case 2')
         operator = lastOperator;        
         variables[0] = stepBy;
     
         if (lastOperator === '+') {
-            console.log('equal case 2 +');
             variables[1] = 0;
             takeSnapshot();
             runningTotal += operate(operator, variables[0], variables[1]);
         }
         else if (lastOperator === '-') {
-            console.log('equal case 2 -');
             variables[1] *= -1;
             variables[1] = 0;
             takeSnapshot();
             runningTotal += operate(operator, variables[0], variables[1]);
         }
         if (lastOperator === '*') {
-            console.log('equal case 2 *');
             variables[1] = 1;
             takeSnapshot();
             runningTotal *= operate(operator, variables[0], variables[1]);
         }
         if (lastOperator === '/') {
-            console.log('equal case 2 /');
             variables[1] = 1;
             takeSnapshot();
             runningTotal /= operate(operator, variables[0], variables[1]);
         }
     }
     else if (variables.length === 2) {
-        console.log('Pressing = and the variable length is 2 ')
         variables[0] = runningTotal;
         variables[1] = calcDisplayField.value;
         takeSnapshot();
@@ -345,9 +306,6 @@ function equalButton() {
     if (operator !== '') {
         calcDisplayField.value = runningTotal;
     }
-    console.log('var: ' + variables+ ' | operator: ' +operator+ ' | lastCommand: ' +lastCommand+ ' | lastInput: ' +lastInput);
-    console.log('last var: ' + lastVariables+ ' | last operator: ' +lastOperator);
-    console.log('runningTotal: ' +runningTotal+ ' | lastTotal: ' +lastTotal + '| Step By: ' + stepBy);
     variables = [];
     operator = '';
     lastInput = '=';
