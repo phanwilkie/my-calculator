@@ -36,6 +36,10 @@ function divide(a, b) {
 
 function takeSnapshot() {lastTotal = runningTotal; lastVariables = variables; lastOperator = operator;};
 
+function percentage() {
+    calcDisplayField.value /= 100;
+};
+
 function enterNumber(num) {
     //do not allow adding of additional 0 if 0 is the only number
     if ((lastInput === '' || lastInput === '+' || lastInput === '-' || lastInput === '*' || lastInput === '/' || lastInput === '=' ) && calcDisplayField.value !== '-') {
@@ -43,7 +47,9 @@ function enterNumber(num) {
     }
     else {
         if (calcDisplayField.value.length < 10 || calcDisplayField.value === '-') {
-            calcDisplayField.value += num; 
+            if (calcDisplayField.value !== '0' && num !== '0') {
+                calcDisplayField.value += num; 
+            }
         }
     }
     lastInput = 'number';
@@ -56,23 +62,25 @@ for (let i = 0; i < buttons.length; i++) {
 };
 
 document.addEventListener('keydown', function(e) {
-        if (e.key === '0') { enterNumber(0) };
-        if (e.key === '1') { enterNumber(1) };
-        if (e.key === '2') { enterNumber(2) };
-        if (e.key === '3') { enterNumber(3) };
-        if (e.key === '4') { enterNumber(4) };
-        if (e.key === '5') { enterNumber(5) };
-        if (e.key === '6') { enterNumber(6) };
-        if (e.key === '7') { enterNumber(7) };
-        if (e.key === '8') { enterNumber(8) };
-        if (e.key === '9') { enterNumber(9) };
-        // if (e.key === '9') { enterNumber(9) };
-        // if (e.key === '9') { enterNumber(9) };
-        // if (e.key === '9') { enterNumber(9) };
-        // if (e.key === '9') { enterNumber(9) };
-        // if (e.key === '9') { enterNumber(9) };
-        // if (e.key === '9') { enterNumber(9) };
-
+        if (e.key === '0') { enterNumber(0) }
+        else if (e.key === '1') { enterNumber(1) }
+        else if (e.key === '2') { enterNumber(2) }
+        else if (e.key === '3') { enterNumber(3) }
+        else if (e.key === '4') { enterNumber(4) }
+        else if (e.key === '5') { enterNumber(5) }
+        else if (e.key === '6') { enterNumber(6) }
+        else if (e.key === '7') { enterNumber(7) }
+        else if (e.key === '8') { enterNumber(8) }
+        else if (e.key === '9') { enterNumber(9) }
+        else if (e.key === 'c') { reset() }
+        else if (e.key === '%') { percentage() }
+        // if (e.key === 'Backspace') { enterNumber(9) };
+        // if (e.key === '/') { enterNumber(9) };
+        // if (e.key === '*') { enterNumber(9) };
+        // if (e.key === '-') { enterNumber(9) };
+        // if (e.key === '+') { enterNumber(9) };
+        // if (e.key === '=') { enterNumber(9) };
+        // if (e.key === '.') { enterNumber(9) };
 });
 
 //SIGN BUTTON - Event Listener
@@ -91,7 +99,9 @@ btnSigns.addEventListener('click', function() {
 });
 
 //PERCENTAGE BUTTON
-btnPercentage.addEventListener('click', function() {calcDisplayField.value /= 100;});
+btnPercentage.addEventListener('click', function() {percentage()});
+
+
 
 //DECIMAL BUTTON - Event Listener (keystroke to be added)
 btnDecimal.addEventListener('click', function() {
@@ -110,8 +120,7 @@ btnDelete.addEventListener('click', function() {
     calcDisplayField.value = lastDigitDeleted;
 });
 
-//RESET BUTTON -  Event Listener
-btnReset.addEventListener('click', function() {
+function reset() {
     runningTotal = 0; 
     lastTotal = 0;
     variables = [];
@@ -122,7 +131,14 @@ btnReset.addEventListener('click', function() {
     lastCommand = '';
     stepBy = 0;
     calcDisplayField.value = 0;
+}
+
+//RESET BUTTON -  Event Listener
+btnReset.addEventListener('click', function() {
+ reset();
 });
+
+
 
 //ADD BUTTON - Event Listener (keystroke to be added)
 btnAdd.addEventListener('click', function(){
