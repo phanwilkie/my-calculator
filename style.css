@@ -1,5 +1,9 @@
+html, body {
+    overflow-x: hidden;
+  }
+
 body {
-    /* width: 160px; */
+    position: relative;
     margin-left: 10px;
 }
 
