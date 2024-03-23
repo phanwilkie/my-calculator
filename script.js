@@ -1,3 +1,5 @@
+//TODO ADD ROUNDINGS 8 DECIMALS
+
 //DOM Element Variables
 const calcDisplayField = document.querySelector("#calcDisplay"); 
 const btnDecimal = document.querySelector('#btn-decimal');
