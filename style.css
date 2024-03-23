@@ -94,10 +94,28 @@ button {
 
 @media (max-width: 500px) {
     body {
-
+        min-height: 100dvh;
     }
-
     .container {
+        /* min-width: 400px; */
+        width: 95%;
+    }
+
+    .main-display {
+        margin-top: 50px;
+    }
+    
+    #calcDisplay {
+        min-width: 90%;
+        height: 80px; 
+   }
+
+    button {
 
     }
+
+    .caption {
+        display: none;
+    }
+
 }
