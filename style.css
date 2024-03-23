@@ -111,12 +111,16 @@ button {
     }
     
     #calcDisplay {
-        width: 90%;
+        width: 85%;
         height: 60px; 
    }
 
    .button-row-1, .button-row-2, .button-row-3, .button-row-4, .button-row-5 {
     gap: 14px;
+   }
+
+   button {
+    text-align: center;
    }
 
    #btn0 {
