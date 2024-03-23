@@ -94,12 +94,14 @@ button {
 
 @media (max-width: 500px) {
     body {
+        display: flex;
+        justify-content: center;
         min-height: 100dvh;
         margin: 1px;
     }
     .container {
         /* min-width: 400px; */
-        width: 100%;
+        width: 95%;
         padding-left: 0px;
         padding-right: 0px;
     }
