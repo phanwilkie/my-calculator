@@ -95,10 +95,11 @@ button {
 @media (max-width: 500px) {
     body {
         min-height: 100dvh;
+        margin: 1px;
     }
     .container {
         /* min-width: 400px; */
-        width: 95%;
+        width: 100%;
     }
 
     .main-display {
@@ -106,7 +107,7 @@ button {
     }
     
     #calcDisplay {
-        min-width: 90%;
+        width: 90%;
         height: 80px; 
    }
 
