@@ -96,7 +96,7 @@ button {
     body {
         display: flex;
         justify-content: center;
-        min-height: 98dvh;
+        min-height: 99dvh;
         margin: 1px;
     }
     .container {
