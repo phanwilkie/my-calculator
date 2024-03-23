@@ -100,6 +100,8 @@ button {
     .container {
         /* min-width: 400px; */
         width: 100%;
+        padding-left: 0px;
+        padding-right: 0px;
     }
 
     .main-display {
@@ -108,15 +110,17 @@ button {
     
     #calcDisplay {
         width: 90%;
-        height: 80px; 
+        height: 60px; 
    }
 
-    button {
+   .button-row-1, .button-row-2, .button-row-3, .button-row-4, .button-row-5 {
+    gap: 14px;
+   }
 
-    }
-
+   #btn0 {
+    width: 44%;
+}
     .caption {
         display: none;
     }
-
 }
