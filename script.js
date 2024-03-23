@@ -1,4 +1,3 @@
-//TODO ADD ROUNDINGS 8 DECIMALS
 
 //DOM Element Variables
 const calcDisplayField = document.querySelector("#calcDisplay"); 
@@ -23,10 +22,10 @@ calcDisplayField.value = 0;
 //Operator Functions
 function operate(operator, a, b) {
     let value = 0;
-    if (operator === '+') { return value = add(a, b)}
-    else if (operator === '-') {return value = subtract(a, b)}
-    else if (operator === '*') {return value = multiply(a, b)}
-    else {return value = divide(a, b)};
+    if (operator === '+') { return value = add(a, b).toFixed(8)}
+    else if (operator === '-') {return value = subtract(a, b).toFixed(8)}
+    else if (operator === '*') {return value = multiply(a, b).toFixed(8)}
+    else {return value = divide(a, b).toFixed(8)};
 };
 function add(a, b) {return Number(a) + Number(b);};
 function subtract(a, b) {return Number(a) - Number(b);};
